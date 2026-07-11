@@ -1,0 +1,25 @@
+WITH RankedStations AS (
+  SELECT
+    member_casual,
+    start_station_name,
+    COUNT(ride_id) AS total_rides,
+    -- Rank stations dynamically for each user group separately
+    ROW_NUMBER() OVER(PARTITION BY member_casual ORDER BY COUNT(ride_id) DESC) AS station_rank
+  FROM 
+    `your_project.cyclistic.cleaned_year_trips`
+  GROUP BY 
+    member_casual, 
+    start_station_name
+)
+SELECT 
+  member_casual,
+  start_station_name,
+  total_rides,
+  station_rank
+FROM 
+  RankedStations
+WHERE 
+  station_rank <= 5
+ORDER BY 
+  member_casual, 
+  station_rank;
