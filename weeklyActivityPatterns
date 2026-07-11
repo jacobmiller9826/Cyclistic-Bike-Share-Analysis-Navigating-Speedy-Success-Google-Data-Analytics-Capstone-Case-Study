@@ -1,0 +1,15 @@
+SELECT
+  member_casual,
+  day_of_week,               -- Integer (1 = Sunday, 7 = Saturday)
+  day_name,                  -- String (Sunday, Monday, etc.)
+  COUNT(ride_id) AS total_rides,
+  ROUND(AVG(ride_length_minutes), 2) AS avg_ride_length_minutes
+FROM 
+  `your_project.cyclistic.cleaned_year_trips`
+GROUP BY 
+  member_casual, 
+  day_of_week, 
+  day_name
+ORDER BY 
+  member_casual, 
+  day_of_week;               -- Keeps the output ordered chronologically Sun-Sat
