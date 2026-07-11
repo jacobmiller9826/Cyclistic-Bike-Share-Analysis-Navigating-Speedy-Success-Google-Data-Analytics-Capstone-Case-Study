@@ -1,0 +1,12 @@
+SELECT
+  member_casual,
+  start_hour,                -- Integer (0 to 23)
+  COUNT(ride_id) AS total_rides
+FROM 
+  `your_project.cyclistic.cleaned_year_trips`
+GROUP BY 
+  member_casual, 
+  start_hour
+ORDER BY 
+  member_casual, 
+  start_hour;
